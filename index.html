@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You Are Important</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+            background-size: 400% 400%;
+            animation: rainbowBG 5s linear infinite;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes rainbowBG {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #ffffff;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            background: transparent;
+            transition: font-size 0.2s ease; /* Smooth font-size transitions */
+        }
+
+        #instructions {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            font-size: 1em;
+            font-family: Arial, sans-serif;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div id="instructions">
+        <p><strong>Instructions:</strong></p>
+        <ul>
+            <li>Use the scroll wheel to resize the text.</li>
+            <li>Click anywhere to change the font.</li>
+        </ul>
+    </div>
+
+    <h1 id="message">You Are Important</h1>
+
+    <script>
+        const message = document.getElementById('message');
+
+        // Fonts to cycle through
+        const fonts = [
+            'Arial, sans-serif',
+            'Courier New, monospace',
+            'Georgia, serif',
+            'Lucida Console, monospace',
+            'Tahoma, sans-serif',
+            'Times New Roman, serif',
+            'Verdana, sans-serif'
+        ];
+        let currentFontIndex = 0;
+
+        // Function to handle font change
+        function changeFont() {
+            currentFontIndex = (currentFontIndex + 1) % fonts.length;
+            message.style.fontFamily = fonts[currentFontIndex];
+        }
+
+        // Attach click event
+        document.body.addEventListener('click', (event) => {
+            if (!event.target.closest('#instructions')) {
+                changeFont();
+            }
+        });
+
+        // Adjust font size with scroll wheel
+        let fontSize = 3; // Initial font size in em
+        function adjustFontSize(event) {
+            event.preventDefault(); // Prevent default zoom or scroll
+            if (event.deltaY < 0) {
+                fontSize = Math.min(10, fontSize + 0.2); // Increase size
+            } else {
+                fontSize = Math.max(1, fontSize - 0.2); // Decrease size
+            }
+            message.style.fontSize = `${fontSize}em`;
+        }
+
+        // Attach wheel event
+        document.body.addEventListener('wheel', adjustFontSize);
+    </script>
+</body>
+</html>
